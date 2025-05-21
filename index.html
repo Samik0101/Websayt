@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Samandar Sayti</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: black;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Orqa fon MAHA */
+    .maha-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 80px;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+      z-index: 0;
+      animation: mahaPulse 3s infinite;
+      pointer-events: none;
+      line-height: 1.2;
+    }
+
+    .maha-background span {
+      margin: 10px;
+    }
+
+    @keyframes mahaPulse {
+      0%, 100% { opacity: 0.05; }
+      50% { opacity: 0.15; }
+    }
+
+    h1 {
+      z-index: 3;
+      font-size: 36px;
+      color: #00ccff;
+      margin-bottom: 20px;
+    }
+
+    #menu, #passwordMenu {
+      z-index: 3;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .menu-btn {
+      padding: 12px 24px;
+      font-size: 18px;
+      background: none;
+      color: #00ccff;
+      border: 2px solid #00ccff;
+      border-radius: 10px;
+      cursor: pointer;
+      animation: pulseBorder 1.5s infinite;
+      transition: 0.3s;
+    }
+
+    .menu-btn:hover {
+      background-color: #00ccff;
+      color: black;
+    }
+
+    @keyframes pulseBorder {
+      0% { box-shadow: 0 0 5px #00ccff; }
+      50% { box-shadow: 0 0 15px #00ffff; }
+      100% { box-shadow: 0 0 5px #00ccff; }
+    }
+
+    #nameInputContainer {
+      z-index: 3;
+      display: none;
+      text-align: center;
+      color: white;
+    }
+
+    #nameInput {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+
+    #submitName {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 18px;
+      background-color: #00ccff;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fon bo‘yicha MAHA -->
+<div class="maha-background">
+  <span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span>
+  <span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span>
+  <span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span>
+  <span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span><span>MAHA</span>
+</div>
+
+<!-- Ism kiritish -->
+<div id="nameInputContainer">
+  <label for="nameInput">Ismingizni kiriting:</label>
+  <input type="text" id="nameInput" placeholder="Masalan: Samandar">
+  <button id="submitName">OK</button>
+</div>
+
+<!-- Salomlashuv -->
+<h1 id="greeting" style="display: none;"></h1>
+
+<!-- Menyu -->
+<div id="menu">
+  <button class="menu-btn" onclick="askPassword()">📢 Kanalga o‘tish</button>
+  <button class="menu-btn" onclick="editName()">✏️ Ismni tahrirlash</button>
+</div>
+
+<!-- Script -->
+<script>
+  const name = localStorage.getItem("userName");
+
+  function showGreeting(name) {
+    document.getElementById("greeting").innerText = `👋 Salom, ${name}!`;
+    document.getElementById("greeting").style.display = "block";
+    document.getElementById("menu").style.display = "flex";
+  }
+
+  if (!name) {
+    document.getElementById("nameInputContainer").style.display = "block";
+  } else {
+    showGreeting(name);
+  }
+
+  document.getElementById("submitName").onclick = () => {
+    const enteredName = document.getElementById("nameInput").value.trim();
+    if (enteredName) {
+      localStorage.setItem("userName", enteredName);
+      document.getElementById("nameInputContainer").style.display = "none";
+      showGreeting(enteredName);
+    } else {
+      alert("Iltimos, ismingizni kiriting.");
+    }
+  };
+
+  function askPassword() {
+    const password = prompt("Kanalga kirish uchun parolni kiriting:");
+    if (password === "1234") {
+      window.open("https://t.me/+0lMkuMQvxpg1MTFi", "_blank");
+    } else {
+      alert("❌ Noto‘g‘ri parol!");
+    }
+  }
+
+  function editName() {
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("greeting").style.display = "none";
+    document.getElementById("nameInputContainer").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
